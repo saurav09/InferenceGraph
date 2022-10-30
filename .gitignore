@@ -4,3 +4,4 @@
 venv
 LanguageDetection/model
 TextTranslation/model
+TextSummary/model

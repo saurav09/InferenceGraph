@@ -5,8 +5,8 @@ from typing import List, Dict
 import torch
 from transformers import M2M100ForConditionalGeneration, M2M100Tokenizer
 
-from src.common.logger import get_logger
-from src.common.timer import timeit
+from TextTranslation.src.common.logger import get_logger
+from TextTranslation.src.common.timer import timeit
 
 logger = get_logger()
 

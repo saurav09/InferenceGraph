@@ -3,8 +3,8 @@ from typing import Dict, List
 
 import fasttext
 
-from src.common.logger import get_logger
-from src.common.timer import timeit
+from LanguageDetection.src.common.logger import get_logger
+from LanguageDetection.src.common.timer import timeit
 
 logger = get_logger()
 
@@ -13,7 +13,7 @@ class Detection:
     def __init__(self):
         logger.info(f'Initialising Language Detection service')
         self.model = fasttext.load_model(
-            f'{os.path.dirname(os.path.abspath(__file__))}/src/model/fasttext/lid.176.bin')
+            f'{os.path.dirname(os.path.abspath(__file__))}/model/fasttext/lid.176.bin')
         logger.info(f'Language Detection model is loaded')
 
     @timeit
