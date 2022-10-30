@@ -33,9 +33,8 @@ class Intent(object):
 
 if __name__ == '__main__':
     request_body = [
-        {"item_id": 1, "text": "I live in India </s> "},
-        {"item_id": 2, "text": "PersonX takes PersonY home"},
-        {"item_id": 3, "text": "There lived once king"}
+        {"item_id": 1,
+         "text": "India vs South Africa Highlights, T20 World Cup 2022: South Africa beat India by 5 wickets, jump to top of the standings"},
     ]
 
     output_all_fields = Intent().predict(request_body)
