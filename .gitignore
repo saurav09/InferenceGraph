@@ -1,0 +1,6 @@
+.idea
+**/**.pyc
+*.log
+venv
+LanguageDetection/model
+TextTranslation/model
