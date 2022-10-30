@@ -5,3 +5,5 @@ venv
 LanguageDetection/model
 TextTranslation/model
 TextSummary/model
+EntityExtraction/model
+IntentDetection/model

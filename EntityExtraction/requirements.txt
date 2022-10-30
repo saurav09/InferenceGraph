@@ -1,0 +1,5 @@
+fasttext-wheel~=0.9.2
+transformers~=4.23.1
+sentencepiece==0.1.97
+torch==1.13.0
+seldon-core==1.7.0

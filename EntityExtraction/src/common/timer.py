@@ -1,7 +1,7 @@
 import time
 from functools import wraps
 
-from LanguageDetection.src.common.logger import get_logger
+from EntityExtraction.src.common.logger import get_logger
 
 logger = get_logger()
 

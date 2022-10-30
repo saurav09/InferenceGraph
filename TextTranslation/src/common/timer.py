@@ -1,7 +1,7 @@
 import time
 from functools import wraps
 
-from src.common.logger import get_logger
+from TextTranslation.src.common.logger import get_logger
 
 logger = get_logger()
 
