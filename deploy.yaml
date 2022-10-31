@@ -19,16 +19,22 @@ spec:
           name: router
         - image: translation:1.0
           name: translation
+        - image: detection:1.0
+          name: detection
     graph:
+      name: detection
+      type: MODEL
       children:
-        - name: entity
+        - name: translation
           type: MODEL
-        - name: intent
-          type: MODEL
-        - name: summary
-          type: MODEL
-      endpoint:
-        type: REST
-      name: router
-      type: ROUTER
+          children:
+            - name: router
+              type: ROUTER
+              children:
+                - name: entity
+                  type: MODEL
+                - name: intent
+                  type: MODEL
+                - name: summary
+                  type: MODEL
     name: seldon-inference-graph

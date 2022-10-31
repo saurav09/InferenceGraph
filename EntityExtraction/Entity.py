@@ -10,6 +10,8 @@ from src.common.timer import timeit
 
 logger = get_logger()
 
+SERVICE_NAME = 'Entity Extraction'
+
 
 class Entity:
     """
@@ -17,7 +19,7 @@ class Entity:
     """
 
     def __init__(self):
-        logger.info('initialising Entity service')
+        logger.info(f'Initialising {SERVICE_NAME} service')
         self.loaded = False
         logger.debug(f'model load status is {self.loaded}')
 
@@ -48,6 +50,7 @@ class Entity:
 
     @timeit
     def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
+        logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
         try:
             if not self.loaded:
                 self._load()
@@ -60,7 +63,7 @@ class Entity:
                     "item_id": request.get('item_id'),
                     "entities": str(nlp(request.get('text'))),
                 })
-            logger.info(f"response from Entity Service is {entities_from_texts}")
+            logger.info(f"response from {SERVICE_NAME} is {entities_from_texts}")
             return entities_from_texts
         except Exception as e:
             traceback.print_exc()

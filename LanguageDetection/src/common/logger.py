@@ -5,7 +5,7 @@ from logging.handlers import TimedRotatingFileHandler
 
 FORMATTER = logging.Formatter("%(asctime)s - %(filename)s:%(lineno)d - %(funcName)20s() - %(levelname)s - %(message)s")
 current_dir = os.path.dirname(os.path.abspath(__file__))
-LOG_FILE = current_dir + "/detection.log"
+LOG_FILE = "/tmp/detection.log"
 APP_NAME = 'InferenceGraph'
 
 

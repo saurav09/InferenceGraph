@@ -9,6 +9,8 @@ from src.common.timer import timeit
 
 logger = get_logger()
 
+SERVICE_NAME = 'Text Summarization'
+
 
 class Summarization:
     """
@@ -16,7 +18,7 @@ class Summarization:
     """
 
     def __init__(self):
-        logger.info('initialising Translation service')
+        logger.info(f'initialising {SERVICE_NAME} service')
         self.loaded = False
         logger.debug(f'model load status is {self.loaded}')
 
@@ -48,6 +50,7 @@ class Summarization:
 
     @timeit
     def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
+        logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
         if not self.loaded:
             self._load()
 
@@ -62,6 +65,8 @@ class Summarization:
                 "item_id": request.get('item_id'),
                 "summary": self.tokenizer.decode(outputs[0]),
             })
+
+        logger.info(f"Response from {SERVICE_NAME} service is {summarized_texts}")
         return summarized_texts
 
 

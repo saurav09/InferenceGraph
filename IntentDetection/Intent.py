@@ -3,10 +3,12 @@ from typing import List, Dict
 
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-from src.common.timer import timeit
 from src.common.logger import get_logger
+from src.common.timer import timeit
 
 logger = get_logger()
+
+SERVICE_NAME = 'Intent Detection'
 
 
 class Intent(object):
@@ -19,7 +21,7 @@ class Intent(object):
 
     @timeit
     def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
-        logger.info(f"Request in Intent service is {request_body}")
+        logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
         intent_texts = []
         for request in request_body:
             intent_texts.append(request.get('text'))
@@ -31,10 +33,10 @@ class Intent(object):
                                       max_length=5)
 
         response = []
-
         for request, intent_text in zip(request_body, outputs):
             response.append({**request, **{'intent': self.tokenizer.decode(intent_text)}})
 
+        logger.info(f"Response from {SERVICE_NAME} service is {response}")
         return response
 
 

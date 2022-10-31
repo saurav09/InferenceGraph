@@ -10,6 +10,8 @@ from src.common.timer import timeit
 
 logger = get_logger()
 
+SERVICE_NAME = 'Text Translation'
+
 
 class Translation:
     """
@@ -17,7 +19,7 @@ class Translation:
     """
 
     def __init__(self):
-        logger.info('initialising Translation service')
+        logger.info(f'initialising {SERVICE_NAME} service')
         self.loaded = False
         logger.debug(f'model load status is {self.loaded}')
 
@@ -92,6 +94,8 @@ class Translation:
         # https://docs.seldon.io/projects/seldon-core/en/latest/python/python_component.html?highlight=load#gunicorn-and-load
         # https://github.com/SeldonIO/seldon-core/issues/2220
 
+        logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
+
         if not self.loaded:
             self._load()
 
@@ -113,6 +117,7 @@ class Translation:
             logger.error(f'error in processing the request, {e}, {traceback.format_exc()}')
             return []
 
+        logger.info(f"Response from {SERVICE_NAME} service is {translation_response}")
         return translation_response
 
 
