@@ -11,11 +11,21 @@ spec:
         containers:
         - image: intent:1.0
           name: intent
+        - image: entity:1.0
+          name: entity
+        - image: summary:1.0
+          name: summary
         - image: router:1.0
           name: router
+        - image: translation:1.0
+          name: translation
     graph:
       children:
+        - name: entity
+          type: MODEL
         - name: intent
+          type: MODEL
+        - name: summary
           type: MODEL
       endpoint:
         type: REST
