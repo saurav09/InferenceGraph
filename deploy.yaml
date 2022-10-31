@@ -1,0 +1,24 @@
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: inference-graph
+spec:
+  name: inference-graph-spec
+  replicas: 1
+  predictors:
+  - componentSpecs:
+    - spec:
+        containers:
+        - image: intent:1.0
+          name: intent
+        - image: router:1.0
+          name: router
+    graph:
+      children:
+        - name: intent
+          type: MODEL
+      endpoint:
+        type: REST
+      name: router
+      type: ROUTER
+    name: seldon-inference-graph

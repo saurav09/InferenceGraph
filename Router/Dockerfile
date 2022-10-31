@@ -1,6 +1,6 @@
 FROM dockerhub.paypalcorp.com/cspds/python3.7-slim
 
-COPY EntityExtraction/requirements.txt /app/requirements.txt
+COPY Router/requirements.txt /app/requirements.txt
 
 WORKDIR /app
 
@@ -9,10 +9,10 @@ RUN pip uninstall -y Flask && pip install Flask --trusted-host pypi.org --truste
 
 EXPOSE 5000
 
-ENV MODEL_NAME Entity
-ENV SERVICE_TYPE MODEL
+ENV MODEL_NAME Router
+ENV SERVICE_TYPE ROUTER
 ENV PERSISTENCE 0
 
-COPY EntityExtraction /app
+COPY Router /app
 
 CMD exec seldon-core-microservice $MODEL_NAME  --service-type $SERVICE_TYPE --persistence $PERSISTENCE

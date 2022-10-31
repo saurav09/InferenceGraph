@@ -4,8 +4,8 @@ from typing import List, Dict
 import torch
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 
-from TextSummary.src.common.logger import get_logger
-from TextSummary.src.common.timer import timeit
+from src.common.logger import get_logger
+from src.common.timer import timeit
 
 logger = get_logger()
 
@@ -26,7 +26,7 @@ class Summarization:
 
         self.device = self._get_device()
         logger.info(f"detected device is: {self.device}")
-        model_path = f'{os.path.dirname(os.path.abspath(__file__))}/../../resources/t5-small'
+        model_path = f'{os.path.dirname(os.path.abspath(__file__))}/model/t5-small'
         self.model = T5ForConditionalGeneration.from_pretrained(model_path, local_files_only=True)
         self.tokenizer = T5Tokenizer.from_pretrained(model_path, local_files_only=True)
 

@@ -1,11 +1,12 @@
 import os
+import traceback
 from typing import List, Dict
 
 import torch
 from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassification
 
-from EntityExtraction.src.common.logger import get_logger
-from EntityExtraction.src.common.timer import timeit
+from src.common.logger import get_logger
+from src.common.timer import timeit
 
 logger = get_logger()
 
@@ -16,7 +17,7 @@ class Entity:
     """
 
     def __init__(self):
-        logger.info('initialising Intent service')
+        logger.info('initialising Entity service')
         self.loaded = False
         logger.debug(f'model load status is {self.loaded}')
 
@@ -47,23 +48,28 @@ class Entity:
 
     @timeit
     def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
-        if not self.loaded:
-            self._load()
+        try:
+            if not self.loaded:
+                self._load()
 
-        intents_from_texts = []
+            entities_from_texts = []
 
-        for request in request_body:
-            nlp = pipeline("ner", model=self.model, tokenizer=self.tokenizer)
-            intents_from_texts.append({
-                "item_id": request.get('item_id'),
-                "entity": nlp(request.get('text')),
-            })
-        return intents_from_texts
+            for request in request_body:
+                nlp = pipeline("ner", model=self.model, tokenizer=self.tokenizer)
+                entities_from_texts.append({
+                    "item_id": request.get('item_id'),
+                    "entities": str(nlp(request.get('text'))),
+                })
+            logger.info(f"response from Entity Service is {entities_from_texts}")
+            return entities_from_texts
+        except Exception as e:
+            traceback.print_exc()
+            return []
 
 
 if __name__ == '__main__':
     request_body = [
-        {"item_id": 1, "text": "I live in India"},
+        {"item_id": 1, "text": "I live in India and I love mu country"},
         {"item_id": 2, "text": "My name is Wolfgang and I live in Berlin"}
     ]
 

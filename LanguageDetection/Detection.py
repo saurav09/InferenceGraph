@@ -3,8 +3,8 @@ from typing import Dict, List
 
 import fasttext
 
-from LanguageDetection.src.common.logger import get_logger
-from LanguageDetection.src.common.timer import timeit
+from src.common.logger import get_logger
+from src.common.timer import timeit
 
 logger = get_logger()
 
@@ -29,7 +29,7 @@ class Detection:
                 logger.error(f"failed to detect language for the item {request.get('item_id')}")
 
             response = {
-                'item_id': request.get('text'),
+                'item_id': request.get('item_id'),
                 'text': request.get('text'),
                 'detected_language': detected_language,
                 'detected_language_probability': detected_language_probability

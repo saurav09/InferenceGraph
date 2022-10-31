@@ -1,7 +1,7 @@
 import time
 from functools import wraps
 
-from IntentDetection.src.common.logger import get_logger
+from src.common.logger import get_logger
 
 logger = get_logger()
 
