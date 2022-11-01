@@ -9,7 +9,7 @@ RUN pip uninstall -y Flask && pip install Flask --trusted-host pypi.org --truste
 
 EXPOSE 5000
 
-ENV MODEL_NAME Combiner
+ENV MODEL_NAME SignalCombiner
 ENV SERVICE_TYPE COMBINER
 ENV PERSISTENCE 0
 

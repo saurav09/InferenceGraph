@@ -49,7 +49,7 @@ class Entity:
         return f"cuda:{current_device}"
 
     @timeit
-    def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
+    def predict(self, request_body: List[Dict], features_names=None) -> Dict:
         logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
         try:
             if not self.loaded:
@@ -64,7 +64,7 @@ class Entity:
                     "entities": str(nlp(request.get('translated_text'))),
                 })
             logger.info(f"response from {SERVICE_NAME} is {entities_from_texts}")
-            return entities_from_texts
+            return {"entity": entities_from_texts}
         except Exception as e:
             traceback.print_exc()
             return []
@@ -72,8 +72,8 @@ class Entity:
 
 if __name__ == '__main__':
     request_body = [
-        {"item_id": 1, "text": "I live in India and I love mu country"},
-        {"item_id": 2, "text": "My name is Wolfgang and I live in Berlin"}
+        {"item_id": 1, "translated_text": "I live in India and I love mu country"},
+        {"item_id": 2, "translated_text": "My name is Wolfgang and I live in Berlin"}
     ]
 
     output_all_fields = Entity().predict(request_body)

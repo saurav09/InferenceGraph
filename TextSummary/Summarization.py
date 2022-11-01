@@ -49,7 +49,7 @@ class Summarization:
         return f"cuda:{current_device}"
 
     @timeit
-    def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
+    def predict(self, request_body: List[Dict], features_names=None) -> Dict:
         logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
         if not self.loaded:
             self._load()
@@ -71,9 +71,8 @@ class Summarization:
                 "item_id": request.get('item_id'),
                 "summary": self.tokenizer.decode(outputs[0]),
             })
-
         logger.info(f"Response from {SERVICE_NAME} service is {summarized_texts}")
-        return summarized_texts
+        return {"summary": summarized_texts}
 
 
 if __name__ == '__main__':
@@ -92,8 +91,7 @@ if __name__ == '__main__':
     """
 
     request_body = [
-        {"item_id": 1, "text": original_text},
-        {"item_id": 2, "text": original_text}
+        {"item_id": 1, "translated_text": original_text}
     ]
 
     output_all_fields = Summarization().predict(request_body)

@@ -13,8 +13,8 @@ spec:
           name: detection
         - image: translation:1.0
           name: translation
-        - image: router:1.0
-          name: router
+#        - image: router:1.0
+#          name: router
         - image: intent:1.0
           name: intent
         - image: entity:1.0
@@ -24,19 +24,19 @@ spec:
         - image: combiner:1.0
           name: combiner
     graph:
-      name: detection
-      type: MODEL
+      name: combiner
+      type: COMBINER
       children:
-        - name: translation
+        - name: detection
           type: MODEL
           children:
-            - name: router
-              type: ROUTER
+            - name: translation
+              type: MODEL
               children:
-                - name: entity
-                  type: MODEL
                 - name: intent
                   type: MODEL
                 - name: summary
+                  type: MODEL
+                - name: entity
                   type: MODEL
     name: seldon-inference-graph

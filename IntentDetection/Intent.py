@@ -20,7 +20,7 @@ class Intent(object):
         self.model = AutoModelForSeq2SeqLM.from_pretrained(model_path, local_files_only=True)
 
     @timeit
-    def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
+    def predict(self, request_body: List[Dict], features_names=None) -> Dict:
         logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
         intent_texts = []
         for request in request_body:
@@ -37,13 +37,13 @@ class Intent(object):
             response.append({**{'item_id': request.get('item_id')}, **{'intent': self.tokenizer.decode(intent_text)}})
 
         logger.info(f"Response from {SERVICE_NAME} service is {response}")
-        return response
+        return {"intent": response}
 
 
 if __name__ == '__main__':
     request_body = [
         {"item_id": 1,
-         "text": "India vs South Africa Highlights, T20 World Cup 2022: South Africa beat India by 5 wickets, jump to top of the standings"},
+         "translated_text": "India vs South Africa Highlights, T20 World Cup 2022: South Africa beat India by 5 wickets, jump to top of the standings"},
     ]
 
     output_all_fields = Intent().predict(request_body)
