@@ -61,7 +61,7 @@ class Entity:
                 nlp = pipeline("ner", model=self.model, tokenizer=self.tokenizer)
                 entities_from_texts.append({
                     "item_id": request.get('item_id'),
-                    "entities": str(nlp(request.get('text'))),
+                    "entities": str(nlp(request.get('translated_text'))),
                 })
             logger.info(f"response from {SERVICE_NAME} is {entities_from_texts}")
             return entities_from_texts

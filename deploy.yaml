@@ -9,18 +9,20 @@ spec:
   - componentSpecs:
     - spec:
         containers:
+        - image: detection:1.0
+          name: detection
+        - image: translation:1.0
+          name: translation
+        - image: router:1.0
+          name: router
         - image: intent:1.0
           name: intent
         - image: entity:1.0
           name: entity
         - image: summary:1.0
           name: summary
-        - image: router:1.0
-          name: router
-        - image: translation:1.0
-          name: translation
-        - image: detection:1.0
-          name: detection
+        - image: combiner:1.0
+          name: combiner
     graph:
       name: detection
       type: MODEL

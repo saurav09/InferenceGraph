@@ -57,9 +57,15 @@ class Summarization:
         summarized_texts = []
 
         for request in request_body:
-            inputs = self.tokenizer.encode("summarize: " + request.get('text'), return_tensors="pt", max_length=512,
+            inputs = self.tokenizer.encode("summarize: " + request.get('translated_text'),
+                                           return_tensors="pt",
+                                           max_length=512,
                                            truncation=True)
-            outputs = self.model.generate(inputs, max_length=150, min_length=40, length_penalty=2.0, num_beams=1,
+            outputs = self.model.generate(inputs,
+                                          max_length=150,
+                                          min_length=40,
+                                          length_penalty=2.0,
+                                          num_beams=1,
                                           early_stopping=True)
             summarized_texts.append({
                 "item_id": request.get('item_id'),

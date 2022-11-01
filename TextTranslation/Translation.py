@@ -112,7 +112,7 @@ class Translation:
             translated_items = self._translate(texts_to_translate, source_lang, target_lang)
 
             for item, translation in zip(request_body.get('translation_items'), translated_items):
-                translation_response.append({**item, **{'translated_text': translation}})
+                translation_response.append({**{'item_id': item.get('item_id')}, **{'translated_text': translation}})
         except Exception as e:
             logger.error(f'error in processing the request, {e}, {traceback.format_exc()}')
             return []

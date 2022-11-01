@@ -24,7 +24,7 @@ class Intent(object):
         logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
         intent_texts = []
         for request in request_body:
-            intent_texts.append(request.get('text'))
+            intent_texts.append(request.get('translated_text'))
 
         features = self.tokenizer(intent_texts, return_tensors='pt', padding=True)
 
@@ -34,7 +34,7 @@ class Intent(object):
 
         response = []
         for request, intent_text in zip(request_body, outputs):
-            response.append({**request, **{'intent': self.tokenizer.decode(intent_text)}})
+            response.append({**{'item_id': request.get('item_id')}, **{'intent': self.tokenizer.decode(intent_text)}})
 
         logger.info(f"Response from {SERVICE_NAME} service is {response}")
         return response

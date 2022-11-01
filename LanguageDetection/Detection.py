@@ -21,25 +21,22 @@ class Detection:
     @timeit
     def predict(self, request_body: List[Dict], features_names=None) -> List[Dict]:
         logger.info(f"Request in {SERVICE_NAME} service is {request_body}")
-        results = []
-        for request in request_body:
-            detected_language, detected_language_probability = None, None
-            try:
-                prediction_response = self.model.predict(request.get('text'), k=3)
-                detected_language = prediction_response[0][0].split('__')[-1]
-                detected_language_probability = round(prediction_response[1][0], 2)
-            except:
-                logger.error(f"failed to detect language for the item {request.get('item_id')}")
+        service_response = []
+        detected_language = None
+        try:
+            prediction_response = self.model.predict(request_body[0].get('text'), k=3)
+            detected_language = prediction_response[0][0].split('__')[-1]
+            detected_language_probability = round(prediction_response[1][0], 2)
+        except:
+            logger.error(f"failed to detect language for the item {request_body[0].get('item_id')}")
 
-            response = {
-                'item_id': request.get('item_id'),
-                'text': request.get('text'),
-                'detected_language': detected_language,
-                'detected_language_probability': detected_language_probability
-            }
-            results.append(response)
-        logger.info(f"Response from {SERVICE_NAME} service is {results}")
-        return results
+        service_response.append({
+            "source_language": detected_language,
+            "target_language": "en",
+            "translation_items": list(request_body)
+        })
+        logger.info(f"Response from {SERVICE_NAME} service is {service_response}")
+        return service_response
 
 
 if __name__ == '__main__':
@@ -48,7 +45,7 @@ if __name__ == '__main__':
         'text': "When will I get the refund?"
     }, {
         'item_id': "abc234",
-        'text': ""
+        'text': "English is a language"
     }]
     r = Detection().predict(requests)
     print(r)
