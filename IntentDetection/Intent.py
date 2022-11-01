@@ -34,7 +34,10 @@ class Intent(object):
 
         response = []
         for request, intent_text in zip(request_body, outputs):
-            response.append({**{'item_id': request.get('item_id')}, **{'intent': self.tokenizer.decode(intent_text)}})
+            response.append({
+                **{'item_id': request.get('item_id')},
+                **{'intent': self.tokenizer.decode(intent_text, skip_special_tokens=True)}
+            })
 
         logger.info(f"Response from {SERVICE_NAME} service is {response}")
         return {"intent": response}

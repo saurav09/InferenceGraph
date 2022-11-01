@@ -69,7 +69,7 @@ class Summarization:
                                           early_stopping=True)
             summarized_texts.append({
                 "item_id": request.get('item_id'),
-                "summary": self.tokenizer.decode(outputs[0]),
+                "summary": self.tokenizer.decode(outputs[0], skip_special_tokens=True)
             })
         logger.info(f"Response from {SERVICE_NAME} service is {summarized_texts}")
         return {"summary": summarized_texts}
