@@ -13,8 +13,6 @@ spec:
           name: detection
         - image: translation:1.0
           name: translation
-#        - image: router:1.0
-#          name: router
         - image: intent:1.0
           name: intent
         - image: entity:1.0
@@ -24,14 +22,14 @@ spec:
         - image: combiner:1.0
           name: combiner
     graph:
-      name: combiner
-      type: COMBINER
+      name: detection
+      type: MODEL
       children:
-        - name: detection
+        - name: translation
           type: MODEL
           children:
-            - name: translation
-              type: MODEL
+            - name: combiner
+              type: COMBINER
               children:
                 - name: intent
                   type: MODEL
