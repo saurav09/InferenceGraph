@@ -1,4 +1,4 @@
-FROM dockerhub.paypalcorp.com/cspds/python3.7-slim
+FROM python:3.8-slim
 
 COPY TextSummary/requirements.txt /app/requirements.txt
 
@@ -6,8 +6,6 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org
 RUN pip uninstall -y Flask && pip install Flask --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org
-
-EXPOSE 5000
 
 ENV MODEL_NAME Summarization
 ENV SERVICE_TYPE MODEL
